@@ -23,10 +23,12 @@ var Engine = (function(global) {
         win = global.window,
         canvas = doc.createElement('canvas'),
         ctx = canvas.getContext('2d'),
-        lastTime;
+        lastTime,
+        rows = 6,
+        columns = 5;
 
-    canvas.width = 505;
-    canvas.height = 606;
+    canvas.width = columns * 101;
+    canvas.height = rows * 101;
     doc.body.appendChild(canvas);
 
     /* This function serves as the kickoff point for the game loop itself
@@ -56,7 +58,11 @@ var Engine = (function(global) {
         /* Use the browser's requestAnimationFrame function to call this
          * function again as soon as the browser is able to draw another frame.
          */
-        win.requestAnimationFrame(main);
+        
+        //checks to see if the game is running
+        if(running) {
+            win.requestAnimationFrame(main);
+        }
     }
 
     /* This function does some initial setup that should only occur once,
@@ -115,8 +121,8 @@ var Engine = (function(global) {
                 'images/grass-block.png',   // Row 1 of 2 of grass
                 'images/grass-block.png'    // Row 2 of 2 of grass
             ],
-            numRows = 6,
-            numCols = 5,
+            numRows = rows,
+            numCols = columns,
             row, col;
 
         /* Loop through the number of rows and columns we've defined above
@@ -180,4 +186,7 @@ var Engine = (function(global) {
      * from within their app.js files.
      */
     global.ctx = ctx;
+    global.rows = rows;
+    global.columns = columns;
+    global.running = true;
 })(this);
